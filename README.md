@@ -31,7 +31,7 @@ The goal is to turn this data into insights that support business decisions. In 
 
 ## **Database Schema**
 
-![Database schema](Images/QuickDBD-export.png)
+![Database schema](Images/schema.png)
 
 `orders` is the central table. `order_items`, `order_payments` and `order_reviews` have composite primary keys, while `geolocation` is not linked directly because each zip code prefix appears many times (it is aggregated during cleaning).
 
