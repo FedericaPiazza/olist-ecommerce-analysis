@@ -1,0 +1,82 @@
+# Olist E-commerce – Database schema
+
+orders
+-
+order_id varchar(32) PK
+customer_id varchar(32) FK >- customers.customer_id
+order_status varchar(20)
+order_purchase_timestamp timestamp
+order_approved_at timestamp NULL
+order_delivered_carrier_date timestamp NULL
+order_delivered_customer_date timestamp NULL
+order_estimated_delivery_date timestamp
+
+order_items
+-
+order_id varchar(32) PK FK >- orders.order_id
+order_item_id int PK
+product_id varchar(32) FK >- products.product_id
+seller_id varchar(32) FK >- sellers.seller_id
+shipping_limit_date timestamp
+price numeric(10,2)
+freight_value numeric(10,2)
+
+order_payments
+-
+order_id varchar(32) PK FK >- orders.order_id
+payment_sequential int PK
+payment_type varchar(20)
+payment_installments int
+payment_value numeric(10,2)
+
+order_reviews
+-
+review_id varchar(32) PK
+order_id varchar(32) PK FK >- orders.order_id
+review_score int
+review_comment_title text NULL
+review_comment_message text NULL
+review_creation_date timestamp
+review_answer_timestamp timestamp
+
+customers
+-
+customer_id varchar(32) PK
+customer_unique_id varchar(32)
+customer_zip_code_prefix varchar(5)
+customer_city varchar(50)
+customer_state char(2)
+
+sellers
+-
+seller_id varchar(32) PK
+seller_zip_code_prefix varchar(5)
+seller_city varchar(50)
+seller_state char(2)
+
+products
+-
+product_id varchar(32) PK
+product_category_name varchar(50) NULL FK >- category_translation.product_category_name
+product_name_lenght int NULL
+product_description_lenght int NULL
+product_photos_qty int NULL
+product_weight_g int NULL
+product_length_cm int NULL
+product_height_cm int NULL
+product_width_cm int NULL
+
+category_translation
+-
+product_category_name varchar(50) PK
+product_category_name_english varchar(50)
+
+# Not linked: zip code prefixes repeat many times here,
+# so this table will be aggregated before joining it.
+geolocation
+-
+geolocation_zip_code_prefix varchar(5)
+geolocation_lat numeric(9,6)
+geolocation_lng numeric(9,6)
+geolocation_city varchar(50)
+geolocation_state char(2)
